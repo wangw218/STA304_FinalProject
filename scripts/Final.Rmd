@@ -42,16 +42,16 @@ The survey data is from 2019 Canadian Election Study - Online Survey [@citeSurve
 
 The census data is from General social survey on Family (cycle 31), 2017 [@CensusDataSource]. The GSS program, established in 1985, conducts telephone surveys across the ten provinces. The GSS is recognized for its regular collection of cross-sectional data that allows for trend analysis, and its capacity to test and develop new concepts that address current or emerging issues. For the census data survey, the target population is all people in Canada who are above 15 years old, excluding those from Yukon, Northwest Territories, and Nunavut. Full-time residents of institutions are also excluded. The frame population is people who could be contacted by telephones. The sampled population is people who took the survey by telephones. Each record in the survey frame was assigned to a stratum within its province. A simple random sample without replacement of records was next performed in each stratum. There are 20,602 respondents and 461 variables in the census data.[@CensusData]
 
-The two plots: Figure \@ref(fig:surveydata) and Figure \@ref(fig:censusdata) shows the raw data information about the provinces of the Survey data and Census Data. From these two plots, we could see Ontario has the largest number of samples, following by Quebec in both of these two datasets. Alberta and British Columbia have the larger number of respondents compared with left. One thing is note is that in GSS, people from Yukon, Northwest Territories, and Nunavut are excluded. Therefore, there are no information about these three provinces in Figure \@ref(fig:censusdata). The number of respondents from these three territories are all extremely low compared with the other 10 provinces from the survey data according to the Figure \@ref(fig:surveydata) so these three territories would not have a great influence on the election result.
+The plot [Figure \@ref(fig:surveydata)] shows the number of supporters of each Party in survey Data. From the plot, we could see Liberal Party and Conservative Party have the most number of supporters while the number of supporters of Liberal Party is slightly larger than Conservative Party's. There are a lot of people Don't know or prefer not to answer which part they would like to vote and many NA data.
 
-```{r surveydata, fig.cap = "Total observations of different provinces in survey Data" , echo = FALSE}
-survey_data %>%
+```{r surveydata, fig.cap = "The number of supporters of each Party in survey Data" , echo = FALSE}
+modified %>%
   ggplot()+
-  geom_bar(aes(province, fill = ..count..),  width = 0.5) +
+  geom_bar(aes(cps19_votechoice, fill = ..count..),  width = 0.5) +
   labs(caption = "CES Survey Data") +
-  theme(axis.text.x = element_text(angle=30, vjust=0.8,hjust = 0.8))+
+  theme(axis.text.x = element_text(angle=45, vjust=0.8,hjust = 0.8))+
   scale_fill_gradient(low = "green", high = "red", na.value = NA) +
-  xlab("Province") +
+  xlab("Party") +
   ylab("Count")
 
 ```
