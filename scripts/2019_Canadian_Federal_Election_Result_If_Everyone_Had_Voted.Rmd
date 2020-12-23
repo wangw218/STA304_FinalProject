@@ -33,9 +33,9 @@ census_data <- read_csv("./../outputs/census_data.csv")
 ```
 
 ## 1. Introduction
-The voting process is crucial since it would determine the Prime Minister/President of a country. However, this is not true that everyone eligible to vote had voted in the elections and this phenomenon would probably affect the final results. According to an article in The Economist, if "everyone" had voted in the 2016 US presidential election, Hillary Clinton would probably be president.[@CiteIntro1]. Based on the information on Statistics Canada, just over three-quarters (77%) of Canadians reported voting in the 2019 federal election [@CiteIntro2], so it could be inferred that Andrew Scheer would probably win the election if "everyone" had voted.
+The voting process is crucial since it would determine the Prime Minister/President of a country. However, this is not true that everyone eligible to vote had voted in the elections and this phenomenon would probably affect the final results. According to an article in The Economist, if "everyone" had voted in the 2016 US presidential election, Hillary Clinton would probably be president [@CiteIntro1]. Based on the information on Statistics Canada, just over three-quarters (77%) of Canadians reported voting in the 2019 federal election [@CiteIntro2], so it could be inferred that Andrew Scheer would probably win the election if "everyone" had voted.
 
-So, how to make "everyone" vote? It is time-consuming and cost-consuming and almost impossible to do a survey among the target population, all Canadian citizens who are above 18 in this case since not everyone would like to participate in the survey. One statistical way to solve this is through multilevel regression and post-stratification (MRP). The central idea of MRP is to partition the data into thousands of demographic cells, estimate voter intent at the cell level using a multilevel regression model, and finally aggregate the cell-level estimates in accordance with the target population's demographic composition.[@CiteIntro3]. In this report, I will use MRP to identify whether Andrew Scheer or Justin Trudeau would win the 2019 Canadian federal election if "everyone" had voted.
+So, how to make "everyone" vote? It is time-consuming and cost-consuming and almost impossible to do a survey among the target population, all Canadian citizens who are above 18 in this case since not everyone would like to participate in the survey. One statistical way to solve this is through multilevel regression and post-stratification (MRP). The central idea of MRP is to partition the data into thousands of demographic cells, estimate voter intent at the cell level using a multilevel regression model, and finally aggregate the cell-level estimates in accordance with the target population's demographic composition [@CiteIntro3]. In this report, I will use MRP to identify whether Andrew Scheer or Justin Trudeau would win the 2019 Canadian federal election if "everyone" had voted.
 
 The procedure is as follows. In the Methodology section (Section 2), two data sets (survey data and census data) will be introduced to investigate how MRP could be used to predict whether Andrew Scheer or Justin Trudeau would win the 2019 Canadian federal election if "everyone" had voted. Results of the MRP analysis are provided in the Results section (Section 3), and summary and conclusion of the MPR analysis along with Weaknesses and Next Steps to improve the analysis are presented in Conclusion section (Section 4).
 
@@ -44,9 +44,9 @@ The procedure is as follows. In the Methodology section (Section 2), two data se
 ## 2. Methodology
 
 ### 2.1 Data
-The survey data is from the 2019 Canadian Election Study - Online Survey [@citeSurveyData]. This online sample was for Canadian Election Study and was composed of a two-wave panel with a modified rolling-cross section during the campaign period and a post-election recontact wave. We only focus on the campaign period survey (CPS) in this report. The CPS contains an online sample of 37,822 members of the Canadian general population through Qualtrics, with targets stratified by region and balanced on gender and age within each region. The target population is all Canadian citizens or permanent residents who are age 18 or over. The frame population is Canadian citizens or permanent residents who are age 18 or over and saw the survey. The sample population is Canadian citizens or permanent residents who are age 18 or over and filled in the survey.[@citeSurveyDataCodeBook]
+The survey data is from the 2019 Canadian Election Study - Online Survey [@citeSurveyData]. This online sample was for Canadian Election Study and was composed of a two-wave panel with a modified rolling-cross section during the campaign period and a post-election recontact wave. We only focus on the campaign period survey (CPS) in this report. The CPS contains an online sample of 37,822 members of the Canadian general population through Qualtrics, with targets stratified by region and balanced on gender and age within each region. The target population is all Canadian citizens or permanent residents who are age 18 or over. The frame population is Canadian citizens or permanent residents who are age 18 or over and saw the survey. The sample population is Canadian citizens or permanent residents who are age 18 or over and filled in the survey [@citeSurveyDataCodeBook].
 
-The census data is from the General social survey on Family (cycle 31), 2017 [@CensusDataSource]. The GSS program, established in 1985, conducts telephone surveys across the ten provinces. The GSS is recognized for its regular collection of cross-sectional data that allows for trend analysis, and its capacity to test and develop new concepts that address current or emerging issues. For the census data survey, the target population is all people in Canada who are above 15 years old, excluding those from Yukon, Northwest Territories, and Nunavut. Full-time residents of institutions are also excluded. The frame population is people who are above 15 years old and could be contacted by telephones. The sampled population is people who are above 15 years old and took the survey by telephone. Each record in the survey frame was assigned to a stratum within its province. A simple random sample without replacement of records was next performed in each stratum. There are 20,602 respondents and 461 variables in the census data.[@CensusData]
+The census data is from the General social survey on Family (cycle 31), 2017 [@CensusDataSource]. The GSS program, established in 1985, conducts telephone surveys across the ten provinces. The GSS is recognized for its regular collection of cross-sectional data that allows for trend analysis, and its capacity to test and develop new concepts that address current or emerging issues. For the census data survey, the target population is all people in Canada who are above 15 years old, excluding those from Yukon, Northwest Territories, and Nunavut. Full-time residents of institutions are also excluded. The frame population is people who are above 15 years old and could be contacted by telephones. The sampled population is people who are above 15 years old and took the survey by telephone. Each record in the survey frame was assigned to a stratum within its province. A simple random sample without replacement of records was next performed in each stratum. There are 20,602 respondents and 461 variables in the census data [@CensusData].
 
 Figure \@ref(fig:surveydata) shows the number of supporters of each party in survey Data. From the plot, we could see the Liberal Party and the Conservative Party have the most number of supporters while the number of supporters of the Liberal Party is slightly larger than the Conservative Party's. There are a lot of people who don't know or prefer not to answer which party they would like to vote and many NA data.
 
@@ -66,15 +66,15 @@ After comparing and analyzing the survey data and census data, I found age, hous
 
 I did some data cleaning to match the variables' names and values between the two original survey data and census data files. For both of the cleaned census data and survey data, they contain the following variables:
 
-"age_group" with range ("45 to 59","60+", "Age 18 to 29", "Age 30 to 44");
+"age_group" with range ("Age 18 to 29", "Age 30 to 44", "45 to 59", "60+");
 "sex" with range (Female, Male);
-"household_income" with range ("\$25,000 to \$49,999",  "\$75,000 to \$99,999", "\$100,000 to \$124,999", \$50,000 to \$74,999", "Less than \$25,000" , "\$125,000 and more");
+"household_income" with range ("Less than \$25,000", "\$25,000 to \$49,999", "\$50,000 to \$74,999", "\$75,000 to \$99,999", "\$100,000 to \$124,999", "\$125,000 and more");
 
 "province" with range ("Quebec","Manitoba","Ontario","Alberta","Nova Scotia","British Columbia", "Saskatchewan", "Prince Edward Island", "New Brunswick", "Newfoundland and Labrador") for census data and three more territories: Yukon, Northwest Territories and Nunavut, for survey data. The distribution of the province about survey and census data can be found in Appendix A.
 
 In the survey data, there are two more variables, which are called "voteLib"	and "voteCon". Both of them are binary variables, the value 1 indicating the respondent would like to vote for the party. The values of these two variables are gotten based on the value of "cps19_votechoice" variable in the raw census dataset. If the value of cps19_votechoice is "Liberal Party", then "voteLib" is 1, otherwise, it is 0; Similarly, if the value of cps19_votechoice is "Conservative Party", then "voteCon" is 1, otherwise, it is 0.
 
-The overview of our cleaned datasets after removing the NA rows is shown in survey_data Table \@ref(tab:survey) for survey data and Table \@ref(tab:census) for census data.
+The overview of our cleaned datasets after removing the NA rows is shown in Table \@ref(tab:survey) for survey data and Table \@ref(tab:census) for census data.
 
 ```{r, echo= FALSE }
 survey_data <- na.omit(survey_data)
@@ -106,7 +106,8 @@ The model I used in this report is MRP as mentioned in the Introduction by runni
 I will build two similar multilevel regression models, one for the Liberal Party and another for the Conservative Party and apply each model to the census data to get the estimates of the probabilities of voting for the two parties among the 10 provinces in census data. Then I will use the estimated probabilities of voting for the two parties in the 10 provinces to get the estimates of seats in each province for the Liberal Party and the Conservative Party. In this report, I assume the party which got a higher number of seats would become the governing party. In our analysis, the leader of this party would win the 2019 Canadian federal election if "everyone" had voted. More information about the Canada Election rule can be found in [@electionRule]
 
 
-## Model Specifics
+#### 2.2.1 Model Specifics
+
 
 I will introduce the model of the Liberal Party first. I used a logistic regression model as my level 1 model since "voteLib" are binary variables. Since "province" is in Group level based on what we learned in the class, a level 2 model would be built to account for different intercepts for level 1 model when provinces are different. The level 1 and level 2 models about the Liberal Party are shown as Equation \@ref(eq:eq1) and Equation \@ref(eq:eq2) respectively:
 
@@ -124,7 +125,7 @@ I will introduce the model of the Liberal Party first. I used a logistic regress
 
 
 In the level 1 model (Equation \@ref(eq:eq1)), $\hat{P}$ is the dependent variable and represents the probability of voting for the Liberal Party.
-There are 3 independent variables, age_group, sex and household_income. Since they are all categorical, dummy variable encoding is used for all of them, resulting in the Equation \@ref(eq:eq1)). j is the j province. $\beta_{0j}$ is the intercept, which is the dependent variable in the level 2 model.
+There are 3 independent variables, age_group, sex and household_income. Since they are all categorical, dummy variable encoding is used for all of them, resulting in the Equation \@ref(eq:eq1). j is the j province. $\beta_{0j}$ is the intercept, which is the dependent variable in the level 2 model.
 
 $\beta_{0j}$ shows the log odds of the probability of voting for the Liberal Party when age_group is "45 to 60", Sex is Female and household income is "\$100,000 to \$124,999".
 
@@ -149,7 +150,9 @@ summary_C = summary(model_Con)
 
 
 
-## Post-Stratification
+#### 2.2.2 Post-Stratification
+
+
 
 ```{r, echo= FALSE}
 reduced_data <- census_data
@@ -184,7 +187,8 @@ Post-Stratification on the Conservative Party's model would use the same equatio
 Using Post-Stratification, we would get the estimated probability of voting for these two parties. To figure out whether Andrew Scheer or Justin Trudeau would win the 2019 Canadian federal election if "everyone" had voted, we need to look at the total number of seats these two parties got. I would estimate the number of seats each party got from a province by the product of the probability of voting for the party in that province and the number of seats that province have. Then the total number of seats each party got is the sum of the seats they got in all provinces. The results would be shown in Result section.
 
 
-## Model Check
+#### 2.2.3 Model Check
+
 
 Before moving to the Result Part, I would discuss if the models I chose are good and valid. I will verify this by using the ROC curve technique. If the area under curve (AUC), is greater than 0.5, I could consider my models are good [@AUC].
 
@@ -243,7 +247,8 @@ estimates_C <- census_data %>%
   summarise(probability = sum(alp_predict_prop_C))
 ```
 
-## Alternative Model
+#### 2.2.4 Alternative Model
+
 
 It should be acceptable by just using a logistic regression model with the 4 variables: province,age_group,sex,household_income all be categorical. However, the drawback of the logistic regression model is that it does not take into account that different provinces might result in different intercepts as seen in level 1 of the multilevel regression model (Equation \@ref(eq:eq1)). A single logistic regression model may not as accurate as the multilevel regression model. However, it would run faster than multilevel regression model, especially when there are a lot of level 2 variables in the multilevel regression model. It would be time-efficient. In our case, level 2 only contains the "Province" variable, the multilevel regression model running time is not long and it would be logically more accurate than a single logistic regression model, so I chose multilevel regression model as my final model.
 
@@ -303,7 +308,7 @@ After the data were cleaned, I built two multilevel Regression models using a bi
 
 In our analysis, Justin Trudeau would still win the 2019 Canadian federal election even if "everyone" had voted but the Liberal Party only have 7 more seats than Conservative Party. However, in other cases, the governing party might change and this might have a great influence on the country and the world. Like the example in the Introduction section, if "everyone" had voted in the 2016 US presidential election, Hillary Clinton would probably be president [@CiteIntro1] and the situation about COVID-19 in America might not be such terrible [@citeHCW], 17,515,091 confirmed cases with 313,748 deaths up to 21st December 2020 according to World Health Organization [@citeWHO]. This report would encourage every eligible citizen in each country to vote during the election period.
 
-### 4.2 Weaknesses
+### 4.1 Weaknesses
 
 Generally, there are four weaknesses in our model and prediction.
 
@@ -315,7 +320,7 @@ Third, the census data excludes people from Yukon, Northwest Territories, and Nu
 
 Lastly, our models only use 4 variables: sex, age group, household income and province. This is not a large number of explanatory variables. If more variables like education and race could be used in our models, the prediction result would be more accurate and less biased.
 
-### 4.3 Next Steps
+### 4.2 Next Steps
 There are 3 next steps we could do to improve our analysis.
 
 First, find a greater census dataset that was collected in 2019 and contains all regions of Canada to do the Post-Stratification to increase the accuracy of the prediction. 
