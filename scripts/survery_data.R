@@ -77,8 +77,6 @@ survey_data$voteLib =  as.factor(survey_data$voteLib)
 survey_data$voteCon =  as.factor(survey_data$voteCon)
 
 
-# survey_data <- na.omit(survey_data)
-
 
 write_csv(survey_data, "./outputs/survey_data.csv")
 

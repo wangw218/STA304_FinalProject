@@ -1,4 +1,4 @@
-This repo contains code and data for predicating the 2019 Canadian Federal Election result if "everyone" had voted. It was created by Wen Wang. The purpose is to create a report that summarises the results of the MRP technique I applied. I detail how to get the data below. The section of this repo are: inputs, outpus, scirpts.
+This repo contains code and data for predicating the 2019 Canadian Federal Election result if "everyone" had voted. It was created by Wen Wang. The purpose is to create a report that summarizes the results of the MRP technique I applied. Some data is unabe to be shared publicly. I detail how to get the data below. The section of this repo are: inputs, outputs, scripts.
 
 Inputs contain data that are unchanged from their original. I use two datasets:
 
@@ -6,7 +6,7 @@ Inputs contain data that are unchanged from their original. I use two datasets:
 
 -[GSS census data - detail how to get this is in scripts/census_data.R]
 
-Outputs contain data that are modified from the input data, the repo and supporting material. These are:
+Outputs contain data that are modified from the input data, the repo and supporting materials. These are:
 
 -[survey_data.csv - the cleaned CES survey data]
 

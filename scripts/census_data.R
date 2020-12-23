@@ -89,7 +89,6 @@ census_data <- census_data %>%
          household_income,
          province)
 
-# census_data <- na.omit(census_data)
 
 #write to file
 write_csv(census_data, "./outputs/census_data.csv")
